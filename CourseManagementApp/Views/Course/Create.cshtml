@@ -1,0 +1,64 @@
+﻿@model CourseManagementApp.ViewModels.CourseViewModel
+
+@{
+    ViewData["Title"] = "Create Course";
+}
+
+<div class="container mt-5">
+    <div class="col-lg-6 col-md-8 mx-auto">
+        <div class="cyber-card p-4 p-md-5">
+            <h3 class="fw-bold text-white mb-1">Create Course</h3>
+            <p class="text-secondary small mb-4">Add a new training course to the ITI catalog.</p>
+
+            <form asp-action="Create" method="post">
+                @Html.AntiForgeryToken()
+                <div asp-validation-summary="ModelOnly" class="alert alert-pink mb-3"></div>
+
+                <div class="mb-3">
+                    <label asp-for="Title" class="form-label"></label>
+                    <input asp-for="Title" class="form-control" placeholder="e.g. Advanced ASP.NET Core & Web APIs" />
+                    <span asp-validation-for="Title" class="text-danger small"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="InstructorId" class="form-label"></label>
+                    <select asp-for="InstructorId" asp-items="@ViewBag.Instructors" class="form-select">
+                        <option value="">-- Choose Instructor --</option>
+                    </select>
+                    <span asp-validation-for="InstructorId" class="text-danger small"></span>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label asp-for="DurationInHours" class="form-label"></label>
+                        <input asp-for="DurationInHours" type="number" class="form-control" placeholder="e.g. 60" />
+                        <span asp-validation-for="DurationInHours" class="text-danger small"></span>
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+                        <label asp-for="Price" class="form-label"></label>
+                        <input asp-for="Price" type="number" step="50" class="form-control" placeholder="e.g. 3500" />
+                        <span asp-validation-for="Price" class="text-danger small"></span>
+                    </div>
+                </div>
+
+                <div class="mb-4">
+                    <label asp-for="Description" class="form-label"></label>
+                    <textarea asp-for="Description" class="form-control" rows="3" placeholder="Brief outline of syllabus and goals..."></textarea>
+                    <span asp-validation-for="Description" class="text-danger small"></span>
+                </div>
+
+                <div class="d-flex justify-content-between align-items-center pt-2">
+                    <a asp-action="Index" class="btn btn-dark-subtle px-4">Cancel</a>
+                    <button type="submit" class="btn btn-pink px-4">Create Course</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

@@ -1,0 +1,53 @@
+﻿@model CourseManagementApp.ViewModels.LoginViewModel
+
+@{
+    ViewData["Title"] = "Sign In";
+}
+
+<div class="container mt-5">
+    <div class="col-lg-5 col-md-7 mx-auto">
+        <div class="cyber-card p-4 p-md-5">
+            <div class="text-center mb-4">
+                <h3 class="fw-bold text-white mb-1">Supervisor Portal</h3>
+                <p class="text-secondary small">Sign in to manage courses and trainees</p>
+            </div>
+
+            <form asp-action="Login" method="post">
+                @Html.AntiForgeryToken()
+                <div asp-validation-summary="ModelOnly" class="alert alert-pink mb-3"></div>
+
+                <div class="mb-3">
+                    <label asp-for="Email" class="form-label"></label>
+                    <div class="input-group">
+                        <input asp-for="Email" class="form-control" placeholder="name@iti.gov.eg" />
+                    </div>
+                    <span asp-validation-for="Email" class="text-danger small"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="Password" class="form-label"></label>
+                    <input asp-for="Password" class="form-control" placeholder="••••••••" />
+                    <span asp-validation-for="Password" class="text-danger small"></span>
+                </div>
+
+                <div class="mb-4 form-check">
+                    <input asp-for="RememberMe" class="form-check-input" />
+                    <label asp-for="RememberMe" class="form-check-label text-secondary small"></label>
+                </div>
+
+                <button type="submit" class="btn btn-pink w-100 py-2 mb-3">Sign In</button>
+
+                <div class="text-center small text-secondary">
+                    Don't have an administrator account?
+                    <a asp-action="Register" class="text-decoration-none" style="color: var(--primary-pink);">Register here</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

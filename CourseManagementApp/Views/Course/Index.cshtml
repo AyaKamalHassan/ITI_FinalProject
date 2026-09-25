@@ -1,0 +1,86 @@
+﻿@model IEnumerable<CourseManagementApp.Models.Course>
+
+@{
+    ViewData["Title"] = "Courses";
+}
+
+<div class="container mt-5">
+    <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3 mb-4">
+        <div>
+            <h2 class="fw-bold mb-1 text-white">@ViewData["PageHeader"]</h2>
+            <div class="d-flex align-items-center gap-2 mt-2">
+                <span class="badge badge-pink">Total Courses: @ViewBag.TotalCourses</span>
+                <span class="badge badge-outline">ITI Professional Tracks</span>
+            </div>
+        </div>
+        <a asp-action="Create" class="btn btn-pink d-inline-flex align-items-center gap-2">
+            <i class="bi bi-plus-lg"></i> Add New Course
+        </a>
+    </div>
+
+    @if (TempData["Success"] != null)
+    {
+        <div class="alert alert-pink alert-dismissible fade show" role="alert">
+            <i class="bi bi-check-circle-fill me-2"></i> @TempData["Success"]
+            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="alert"></button>
+        </div>
+    }
+
+    <div class="table-responsive">
+        <table class="custom-table">
+            <thead>
+                <tr>
+                    <th>Code</th>
+                    <th>Course Title</th>
+                    <th>Lead Instructor</th>
+                    <th>Duration</th>
+                    <th>Fee</th>
+                    <th class="text-end">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (!Model.Any())
+                {
+                    <tr>
+                        <td colspan="6" class="text-center py-5 text-muted">
+                            <i class="bi bi-inbox fs-1 d-block mb-2"></i>
+                            No courses available yet. Click "Add New Course" to get started.
+                        </td>
+                    </tr>
+                }
+                else
+                {
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td class="text-secondary font-monospace">#@item.Id</td>
+                            <td class="fw-bold">@item.Title</td>
+                            <td>
+                                <span class="badge badge-outline">
+                                    <i class="bi bi-person-badge me-1"></i>@(item.Instructor?.Name ?? "Unassigned")
+                                </span>
+                            </td>
+                            <td><i class="bi bi-clock me-1 text-muted"></i>@item.DurationInHours hrs</td>
+                            <td class="text-white fw-bold" style="color: var(--primary-pink) !important;">
+                                @item.Price.ToString("N2") EGP
+                            </td>
+                            <td class="text-end">
+                                <div class="btn-group gap-1">
+                                    <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-sm btn-dark-subtle" title="Details">
+                                        <i class="bi bi-eye"></i>
+                                    </a>
+                                    <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-sm btn-outline-pink" title="Edit">
+                                        <i class="bi bi-pencil"></i>
+                                    </a>
+                                    <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-sm btn-dark-subtle text-danger" title="Delete">
+                                        <i class="bi bi-trash"></i>
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
